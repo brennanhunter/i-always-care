@@ -48,7 +48,8 @@ export default function Home() {
     const token = await requestNotificationPermission();
     if (token) {
       setNotificationStatus('granted');
-      alert('Notifications enabled! You will receive daily messages at 9 AM. ❤️');
+      alert(`✅ Notifications enabled!\n\n📋 Copy this token and add it to Vercel:\n\n${token}\n\n(Token also logged in console)`);
+      console.log('FCM Token for Vercel:', token);
     } else {
       alert('Please allow notifications in your browser settings.');
     }
