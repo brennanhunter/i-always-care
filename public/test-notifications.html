@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Notifications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="padding: 20px; font-family: sans-serif;">
+    <h2>iOS PWA Notification Test</h2>
+    <button onclick="testNotification()" style="padding: 15px; font-size: 18px;">
+        Test Notification Now
+    </button>
+    <p id="status"></p>
+
+    <script>
+        async function testNotification() {
+            const status = document.getElementById('status');
+            
+            // Check if notifications are supported
+            if (!('Notification' in window)) {
+                status.textContent = 'Notifications not supported';
+                return;
+            }
+            
+            status.textContent = 'Permission: ' + Notification.permission;
+            
+            // Request permission if needed
+            if (Notification.permission === 'default') {
+                const permission = await Notification.requestPermission();
+                status.textContent = 'Permission result: ' + permission;
+            }
+            
+            // Show a local notification
+            if (Notification.permission === 'granted') {
+                new Notification('Test from iAlwaysCare', {
+                    body: 'This is a local test notification!',
+                    icon: '/icon-192.png'
+                });
+                status.textContent = 'Notification sent!';
+            }
+        }
+    </script>
+</body>
+</html>
