@@ -95,7 +95,17 @@ export default function Home() {
       default: return '💌 Message';
     }
   };
-Notification Permission Banner */}
+
+  return (
+    <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#F794A8' }}>
+      {showConfetti && (
+        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
+          <div className="text-6xl animate-bounce">🎉</div>
+        </div>
+      )}
+      
+      <main className="max-w-2xl mx-auto">
+        {/* Notification Permission Banner */}
         {notificationStatus === 'default' && (
           <div className="bg-white rounded-2xl shadow-lg p-4 mb-4">
             <p className="text-center text-gray-700 mb-3">
@@ -110,16 +120,6 @@ Notification Permission Banner */}
           </div>
         )}
 
-        {/* 
-  return (
-    <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#F794A8' }}>
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
-          <div className="text-6xl animate-bounce">🎉</div>
-        </div>
-      )}
-      
-      <main className="max-w-2xl mx-auto">
         {/* Rewards Button - Always visible */}
         <div className="flex justify-end mb-4">
           <Link 
@@ -131,10 +131,6 @@ Notification Permission Banner */}
           </Link>
         </div>
         
-        {/* v>
-      )}
-      
-      <main className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center overflow-hidden w-48 h-48 mx-auto">
