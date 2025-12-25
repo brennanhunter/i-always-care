@@ -13,6 +13,7 @@ export default function Home() {
   const [claimed, setClaimed] = useState<boolean>(false);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [unredeemedCount, setUnredeemedCount] = useState<number>(0);
+  const [notificationStatus, setNotificationStatus] = useState<string>('');
 
   useEffect(() => {
     // Initialize app and get today's random message
@@ -32,9 +33,9 @@ export default function Home() {
     setUnredeemedCount(getUnredeemedRewards().length);
     }
 
-    // Request notification permission on first load
-    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'default') {
-      requestNotificationPermission();
+    // Check notification permission status
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      setNotificationStatus(Notification.permission);
     }
 
     // Listen for foreground notifications
@@ -42,6 +43,16 @@ export default function Home() {
       console.log('Received foreground message:', payload);
     }).catch(err => console.log('Failed to receive message:', err));
   }, []);
+
+  const handleEnableNotifications = async () => {
+    const token = await requestNotificationPermission();
+    if (token) {
+      setNotificationStatus('granted');
+      alert('Notifications enabled! You will receive daily messages at 9 AM. ❤️');
+    } else {
+      alert('Please allow notifications in your browser settings.');
+    }
+  };
 
   const handleClaimReward = () => {
     if (message && message.type === 'reward') {
@@ -84,7 +95,22 @@ export default function Home() {
       default: return '💌 Message';
     }
   };
+Notification Permission Banner */}
+        {notificationStatus === 'default' && (
+          <div className="bg-white rounded-2xl shadow-lg p-4 mb-4">
+            <p className="text-center text-gray-700 mb-3">
+              🔔 Enable notifications to get your daily message at 9 AM!
+            </p>
+            <button
+              onClick={handleEnableNotifications}
+              className="w-full bg-gradient-to-r from-[#FD4E8F] to-[#FBB5D1] text-white font-bold py-3 px-6 rounded-full hover:shadow-lg transition-all"
+            >
+              Enable Notifications
+            </button>
+          </div>
+        )}
 
+        {/* 
   return (
     <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#F794A8' }}>
       {showConfetti && (
